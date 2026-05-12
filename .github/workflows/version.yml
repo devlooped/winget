@@ -1,0 +1,39 @@
+# Fetches the latest stable release from shanselman/winget-tui weekly
+# and persists the version tag to winget-tui.version at the repo root.
+# Pushes directly to main only if the version changed.
+name: version
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 🤖 defaults
+        uses: devlooped/actions-bot@v1
+        with:
+          name: ${{ secrets.BOT_NAME }}
+          email: ${{ secrets.BOT_EMAIL }}
+          gh_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🤘 checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ env.GH_TOKEN }}
+
+      - name: 💾 update version file
+        run: |
+          VERSION=$(gh release view --repo shanselman/winget-tui --json tagName --jq '.tagName')
+          echo $VERSION > winget-tui.version
+          git add winget-tui.version
+          (git commit -m "⬆️ Update winget-tui to $VERSION" && git push) || echo "No changes to commit"

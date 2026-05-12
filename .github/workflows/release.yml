@@ -1,0 +1,40 @@
+# Creates a draft release whenever winget-tui.version changes,
+# using the release notes from the matching shanselman/winget-tui release.
+
+name: release
+on:
+  push:
+    branches: [main]
+    paths:
+      - winget-tui.version
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 🤘 checkout
+        uses: actions/checkout@v4
+        
+      - name: 🚀 create draft release
+        run: |
+          VERSION=$(cat winget-tui.version)
+          BODY=$(gh release view "$VERSION" --repo shanselman/winget-tui --json body --jq '.body // ""')
+          {
+            printf '%s\n' "$BODY"
+            echo ""
+            echo "https://github.com/shanselman/winget-tui/releases/tag/$VERSION"
+          } > release-notes.md
+          gh release create "$VERSION" \
+            --draft \
+            --title "$VERSION" \
+            --notes-file release-notes.md || echo "Release $VERSION already exists"
