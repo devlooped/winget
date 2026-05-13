@@ -1,4 +1,4 @@
-# winget
+# dnx winget
 
 [![Version](https://img.shields.io/nuget/vpre/winget.svg?color=royalblue)](https://www.nuget.org/packages/winget)
 [![Downloads](https://img.shields.io/nuget/dt/winget.svg?color=darkmagenta)](https://www.nuget.org/packages/winget)
