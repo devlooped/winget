@@ -15,11 +15,8 @@ on:
     types: [prereleased, released]
     
 env:
-  DOTNET_NOLOGO: true
   Configuration: Release
-  VersionLabel: ${{ github.ref }}
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  MSBUILDTERMINALLOGGER: auto
+  GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
   SLEET_FEED_URL: https://api.nuget.org/v3/index.json
       
 jobs:
@@ -28,9 +25,6 @@ jobs:
     steps:
       - name: 🤘 checkout
         uses: actions/checkout@v4
-        with: 
-          submodules: recursive
-          fetch-depth: 0
 
       - name: ⚙ dotnet
         uses: devlooped/actions-dotnet-env@v1

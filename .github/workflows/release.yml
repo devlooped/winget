@@ -33,6 +33,7 @@ jobs:
             printf '%s\n' "$BODY"
             echo ""
             echo "https://github.com/shanselman/winget-tui/releases/tag/$VERSION"
+            echo "<!-- X -->"
           } > release-notes.md
           gh release create "$VERSION" \
             --draft \
