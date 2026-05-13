@@ -24,7 +24,7 @@ env:
       
 jobs:
   publish:
-    runs-on: ${{ vars.PUBLISH_AGENT || 'ubuntu-latest' }}
+    runs-on: windows-latest
     steps:
       - name: 🤘 checkout
         uses: actions/checkout@v4
