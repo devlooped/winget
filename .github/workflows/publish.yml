@@ -18,6 +18,8 @@ env:
   Configuration: Release
   GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
   SLEET_FEED_URL: https://api.nuget.org/v3/index.json
+  VersionLabel: ${{ github.ref }}
+  VersionOrTag: ${{ github.event.inputs.version || github.event.release.tag_name || format('0.1.0-preview.{0}', github.run_number) }}
       
 jobs:
   publish:
