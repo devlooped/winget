@@ -11,6 +11,11 @@ A terminal UI for Windows Package Manager (winget) - search, install, upgrade, a
 
 ## Usage
 > dnx winget --yes
+
+> [!IMPORTANT]
+> This project is simply a dnx-distributable wrapper around the original 
+> [winget-tui](https://github.com/shanselman/winget-tui) project by Scott Hanselman. 
+> Please refer to the original repository for issues, contributions, and updates.
 <!-- #content -->
 ---
 <!-- include https://github.com/devlooped/sponsors/raw/main/footer.md -->
@@ -51,8 +56,3 @@ A terminal UI for Windows Package Manager (winget) - search, install, upgrade, a
 [Learn more about GitHub Sponsors](https://github.com/sponsors)
 
 <!-- https://github.com/devlooped/sponsors/raw/main/footer.md -->
-
-> [!IMPORTANT]
-> This project is simply a dnx-distributable wrapper around the original 
-> [winget-tui](https://github.com/shanselman/winget-tui) project by Scott Hanselman. 
-> Please refer to the original repository for issues, contributions, and updates.
