@@ -1,4 +1,3 @@
 <Solution>
-  <Project Path="src/Tests/Tests.csproj" />
   <Project Path="src/winget/winget.csproj" />
 </Solution>

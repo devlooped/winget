@@ -1,13 +1,58 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+    <Description>
+      A terminal UI for Windows Package Manager (winget) - search, install, upgrade, and manage packages
+    </Description>
     <PackageId>winget</PackageId>
+    <PackAsTool>true</PackAsTool>
+    <PackageTags>dotnet-tool winget terminal tui nativeaot</PackageTags>
+    <PackageProjectUrl>https://github.com/devlooped/winget</PackageProjectUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <ToolPackageRuntimeIdentifiers>win-x64;win-arm64</ToolPackageRuntimeIdentifiers>
+    <ImplicitUsings>true</ImplicitUsings>
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <StripSymbols>true</StripSymbols>
+    <SelfContained>true</SelfContained>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <TuiVersion>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\..\..\winget-tui.version').Trim())</TuiVersion>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="NuGetizer" Version="1.4.7">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <TuiRid Include="win-x64">
+      <AssetName>winget-tui-x64.exe</AssetName>
+    </TuiRid>
+    <TuiRid Include="win-arm64">
+      <AssetName>winget-tui-arm64.exe</AssetName>
+    </TuiRid>
   </ItemGroup>
+
+  <Target Name="PrepareTui"
+          Outputs="$(MSBuildProjectDirectory)\obj\winget-tui\$(TuiVersion)\%(TuiRid.Identity)\winget-tui.exe"
+          BeforeTargets="AssignTargetPaths">
+
+    <MakeDir Directories="$(MSBuildProjectDirectory)\obj\winget-tui\$(TuiVersion)\%(TuiRid.Identity)" />
+
+    <DownloadFile
+      SourceUrl="https://github.com/shanselman/winget-tui/releases/download/$(TuiVersion)/%(TuiRid.AssetName)"
+      DestinationFolder="$(MSBuildProjectDirectory)\obj\winget-tui\$(TuiVersion)\%(TuiRid.Identity)"
+      DestinationFileName="winget-tui.exe" />
+  </Target>
+
+  <Target Name="CollectTui" AfterTargets="PrepareTui" Condition="'$(RuntimeIdentifier)' != ''">
+    <ItemGroup>
+      <None Include="$(MSBuildProjectDirectory)\obj\winget-tui\$(TuiVersion)\$(RuntimeIdentifier)\winget-tui.exe"
+            CopyToPublishDirectory="Never"
+            CopyToOutputDirectory="PreserveNewest"
+            Link="winget-tui\winget-tui.exe" />
+      <ResolvedFileToPublish Include="$(MSBuildProjectDirectory)\obj\winget-tui\$(TuiVersion)\$(RuntimeIdentifier)\winget-tui.exe"
+               CopyToPublishDirectory="PreserveNewest"
+               RelativePath="winget-tui\winget-tui.exe" />
+    </ItemGroup>
+  </Target>
+
 </Project>

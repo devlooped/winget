@@ -2,7 +2,4 @@
 [![GitHub](https://img.shields.io/badge/-source-181717.svg?logo=GitHub)](https://github.com/devlooped/winget)
 
 <!-- include ../../readme.md#content -->
-
 <!-- include https://github.com/devlooped/sponsors/raw/main/footer.md -->
-
-<!-- exclude -->
