@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.9.1](https://github.com/devlooped/winget/tree/v0.9.1) (2026-05-13)
+
+[Full Changelog](https://github.com/devlooped/winget/compare/v0.9.0...v0.9.1)
+
 ## [v0.9.0](https://github.com/devlooped/winget/tree/v0.9.0) (2026-05-13)
 
 [Full Changelog](https://github.com/devlooped/winget/compare/v0.3.0...v0.9.0)
